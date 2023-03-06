@@ -29,58 +29,85 @@
     {% for prescription in prescriptions %}
         {% include '_prescription.html' %}
     {% endfor %}
-    
-    {% if current_user.is_authenticated %}
-        {% if current_user.user_cat == 'admin' %}
-            <form method="post">
-                <input type="submit" class="btn btn-info" value="Add User" name="Add User">
-                <a href="{{ url_for('add_user') }}">
-                <input type="submit" class="btn btn-info" value="Add Procedure" name="Add Procedure">
-                <a href="{{ url_for('add_procedure') }}">
-                <input type="submit" class="btn btn-info" value="Add Physician" name="Add Physician">
-                <a href="{{ url_for('add_physician') }}">
-                <input type="submit" class="btn btn-info" value="Add Department" name="Add Department">
-                <a href="{{ url_for('add_department') }}">
-                <input type="submit" class="btn btn-info" value="Add Medication" name="Add Medication">
-                <a href="{{ url_for('add_medication') }}"></a>
-                <input type="submit" class="btn btn-info" value="Add Room" name="Add Room">
-                <a href="{{ url_for('add_room') }}">
-                <input type="submit" class="btn btn-info" value="Add Nurse" name="Add Nurse">
-                <a href="{{ url_for('add_nurse') }}">
-                <input type="submit" class="btn btn-info" value="Add Affiliation" name="Add Affiliation">
-                <a href="{{ url_for('add_affiliation') }}">
-                <input type="submit" class="btn btn-info" value="Add Training" name="Add Training">
-                <a href="{{ url_for('add_training') }}">
-                <input type="submit" class="btn btn-info" value="View Users" name="View Users">
-                <input type="submit" class="btn btn-info" value="Delete User" name="Delete User">
-            </form>
-        {% endif %}
-        {% if current_user.user_cat == 'front_desk' %}
-            <form method="post">
-                <input type="submit" class="btn btn-info" value="Register Patient" name="Register Patient">
-                <a href="{{ url_for('register_patient') }}">
-                <input type="submit" class="btn btn-info" value="Admit Patient" name="Admit Patient">
-                <a href="{{ url_for('admit_patient') }}">
-                <input type="submit" class="btn btn-info" value="Discharge Patient" name="Discharge Patient">
-                <a href="{{ url_for('discharge_patient') }}">
-                <input type="submit" class="btn btn-info" value="Schedule Appointment" name="Schedule Appointment">
-                <a href="{{ url_for('schedule_appointment') }}">
-            </form>
-        {% endif %}
-        {% if current_user.user_cat == 'data_entry' %}
-            <form method="post">
-                <input type="submit" class="btn btn-info" value="Add results and prescriptions" name="Add results and prescriptions">
-                <a href="{{ url_for('add_results_prescriptions') }}">
-            </form>
-        {% endif %}
-        {% if current_user.user_cat == 'doctor' %}
-            <form method="post">
-                <input type="submit" class="btn btn-info" value="View my Patients" name="View my Patients">
-                <input type="submit" class="btn btn-info" value="View my Appointments" name="View my Appointments">
-                <input type="submit" class="btn btn-info" value="View my Prescriptions" name="View my Prescriptions">
-                <input type="submit" class="btn btn-info" value="Query all patient information by SSN" name="Query all patient information by SSN">
-            </form>
-        {% endif %}
-    {% endif %} 
+    <!-- make rows of 2 columns -->
+    <div class="row">
+                    
+            {% if current_user.is_authenticated %}
+                {% if current_user.user_cat == 'admin' %}
+                
+                    <form method="post">
+                        <div class="col-md-6">
+                        <input type="submit" class="btn btn-info" value="Add User" name="Add User"> 
+                        <a href="{{ url_for('add_user') }}">
+                        </div> 
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="Add Procedure" name="Add Procedure">
+                            <a href="{{ url_for('add_procedure') }}">
+                        </div> 
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="Add Physician" name="Add Physician">
+                            <a href="{{ url_for('add_physician') }}">
+                        </div> 
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="Add Department" name="Add Department">
+                            <a href="{{ url_for('add_department') }}">
+                        </div> 
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="Add Medication" name="Add Medication">
+                            <a href="{{ url_for('add_medication') }}"></a>
+                        </div> 
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="Add Room" name="Add Room">
+                            <a href="{{ url_for('add_room') }}">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="Add Nurse" name="Add Nurse">
+                            <a href="{{ url_for('add_nurse') }}">
+                        </div> 
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="Add Affiliation" name="Add Affiliation">
+                            <a href="{{ url_for('add_affiliation') }}">
+                        </div> 
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="Add Training" name="Add Training">
+                            <a href="{{ url_for('add_training') }}">
+                        </div> 
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="View Users" name="View Users">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info" value="Delete User" name="Delete User">
+                        </div>
+                    </form>
+                {% endif %}
+                {% if current_user.user_cat == 'front_desk' %}
+                    <form method="post">
+                        <input type="submit" class="btn btn-info" value="Register Patient" name="Register Patient">
+                        <a href="{{ url_for('register_patient') }}">
+                        <input type="submit" class="btn btn-info" value="Admit Patient" name="Admit Patient">
+                        <a href="{{ url_for('admit_patient') }}">
+                        <input type="submit" class="btn btn-info" value="Discharge Patient" name="Discharge Patient">
+                        <a href="{{ url_for('discharge_patient') }}">
+                        <input type="submit" class="btn btn-info" value="Schedule Appointment" name="Schedule Appointment">
+                        <a href="{{ url_for('schedule_appointment') }}">
+                    </form>
+                {% endif %}
+                {% if current_user.user_cat == 'data_entry' %}
+                    <form method="post">
+                        <input type="submit" class="btn btn-info" value="Add results and prescriptions" name="Add results and prescriptions">
+                        <a href="{{ url_for('add_results_prescriptions') }}">
+                    </form>
+                {% endif %}
+                {% if current_user.user_cat == 'doctor' %}
+                    <form method="post">
+                        <input type="submit" class="btn btn-info" value="View my Patients" name="View my Patients">
+                        <input type="submit" class="btn btn-info" value="View my Appointments" name="View my Appointments">
+                        <input type="submit" class="btn btn-info" value="View my Prescriptions" name="View my Prescriptions">
+                        <input type="submit" class="btn btn-info" value="Query all patient information by SSN" name="Query all patient information by SSN">
+                    </form>
+                {% endif %}
+            {% endif %} 
+        </div>
+    </div>
     
 {% endblock %}

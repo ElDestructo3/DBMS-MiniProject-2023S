@@ -1,0 +1,36 @@
+.test {
+    /* background-image: url("hospital.jpg"); */
+    background-color: #eeeeee;
+    padding: 50px;
+    border-radius: 10px;
+    width: 40%;
+    margin-top: 0 auto;
+}
+
+.navbar-default {
+    margin-bottom: 0px;
+}
+
+.outer{
+    position: absolute;
+    background-image: url("hospital.jpg");
+    background-size: cover;
+    height: 95%;
+    width: 100%;
+    /* center align content vertically */
+    display: flex;
+    align-items: center;
+
+}
+
+h1{
+    color: #000000;
+    font-size: 60px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.btn{
+    margin: 5px;
+    width: 200px;
+}
