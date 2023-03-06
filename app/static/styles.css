@@ -5,6 +5,8 @@
     border-radius: 10px;
     width: 40%;
     margin-top: 0 auto;
+    max-height: 90%;
+    overflow: scroll;
 }
 
 .navbar-default {
