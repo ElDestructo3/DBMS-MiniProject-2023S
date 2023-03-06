@@ -121,23 +121,28 @@ def index_data_entry():
 @login_required
 def index_doctor():
     doctor = Physician.query.filter(Physician.SSN==current_user.SSN).first()
+    if doctor is None:
+        flash('Not Registered in database!')
+        return redirect(url_for('index_doctor'))
     if request.form.get('View my Patients') == 'View my Patients':
-        if doctor is not None:
-            page = request.args.get('page', 1, type=int)
-            patients_1 = Prescribes.query.filter(Prescribes.Physician == doctor.EmployeeID).with_entities(Prescribes.Patient)
-            patients_2 = Patient.query.filter(Patient.PCP==doctor.EmployeeID).with_entities(Patient.SSN)
-            patients_3 = Undergoes.query.filter(Undergoes.Physician==doctor.EmployeeID).with_entities(Undergoes.Patient)
-            patients_4 = Appointment.query.filter(Appointment.Physician==doctor.EmployeeID).with_entities(Appointment.Patient)
-            patients=[]
-            for p in patients_1:
-                patients.append(p[0])
-            for p in patients_2:
-                patients.append(p[0])
-            for p in patients_3:
-                patients.append(p[0])
-            for p in patients_4:
-                patients.append(p[0])
-
+        page = request.args.get('page', 1, type=int)
+        patients_1 = Prescribes.query.filter(Prescribes.Physician == doctor.EmployeeID).with_entities(Prescribes.Patient)
+        patients_2 = Patient.query.filter(Patient.PCP==doctor.EmployeeID).with_entities(Patient.SSN)
+        patients_3 = Undergoes.query.filter(Undergoes.Physician==doctor.EmployeeID).with_entities(Undergoes.Patient)
+        patients_4 = Appointment.query.filter(Appointment.Physician==doctor.EmployeeID).with_entities(Appointment.Patient)
+        patients=[]
+        for p in patients_1:
+            patients.append(p[0])
+        for p in patients_2:
+            patients.append(p[0])
+        for p in patients_3:
+            patients.append(p[0])
+        for p in patients_4:
+            patients.append(p[0])
+        if len(patients) == 0:
+            flash('No Patients to show!')
+            redirect(url_for('index_doctor'))
+        else:
             patients_full = Patient.query.filter(Patient.SSN==patients[0])
             for p in patients:
                 pp = Patient.query.filter(Patient.SSN==p)
@@ -151,15 +156,14 @@ def index_doctor():
                 if patients.has_prev else None
             return render_template('index.html', title='Home', patients=patients.items,
                                 next_url=next_url, prev_url=prev_url)
-        else:
-            flash('No Patients to show!')
-            return redirect(url_for('index_doctor'))
     
     if request.form.get('View my Appointments') == 'View my Appointments':
         page = request.args.get('page', 1, type=int)
-        appointments = Appointment.query.filter(Appointment.Physician==doctor.EmployeeID).paginate(
-            page, app.config['USERS_PER_PAGE'], False)
+        appointments = Appointment.query.filter(Appointment.Physician==doctor.EmployeeID).first()
         if appointments is not None:
+
+            appointments = Appointment.query.filter(Appointment.Physician==doctor.EmployeeID).paginate(
+                page, app.config['USERS_PER_PAGE'], False)
             next_url = url_for('explore', page=appointments.next_num) \
                 if appointments.has_next else None
             prev_url = url_for('explore', page=appointments.prev_num) \
@@ -172,9 +176,10 @@ def index_doctor():
     
     if request.form.get('View my Prescriptions') == 'View my Prescriptions':
         page = request.args.get('page', 1, type=int)
-        prescriptions = Prescribes.query.filter(Prescribes.Physician==doctor.EmployeeID).paginate(
-            page, app.config['USERS_PER_PAGE'], False)
+        prescriptions = Prescribes.query.filter(Prescribes.Physician==doctor.EmployeeID).first()
         if prescriptions is not None:
+            prescriptions = Prescribes.query.filter(Prescribes.Physician==doctor.EmployeeID).paginate(
+                page, app.config['USERS_PER_PAGE'], False)
             next_url = url_for('explore', page=prescriptions.next_num) \
                 if prescriptions.has_next else None
             prev_url = url_for('explore', page=prescriptions.prev_num) \
