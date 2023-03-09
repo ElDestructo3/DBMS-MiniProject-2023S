@@ -303,6 +303,21 @@ def schedule_appointment():
         if(form.start.data >= form.end.data):
             flash('Error, appointment has not been scheduled, start time must be before end time!')
             return redirect(url_for('schedule_appointment'))
+        minutes_diff = (form.end.data - form.start.data).total_seconds() / 60.0
+        if minutes_diff > 60:
+            flash('Appointments can not be longer than an hour.')
+            return redirect(url_for('schedule_appointment'))
+        format = '%Y-%m-%d %H:%M:%S'
+        start_hour = datetime.strptime(str(form.start.data), format).hour
+        end_hour = datetime.strptime(str(form.end.data), format).hour
+        print(start_hour)
+        print(end_hour)
+        if start_hour < 8 or start_hour >= 17:
+            flash('Appointments can only be scheduled between 8am and 5pm.')
+            return redirect(url_for('schedule_appointment'))
+        if end_hour < 8 or end_hour >= 17:
+            flash('Appointments can only be scheduled between 8am and 5pm.')
+            return redirect(url_for('schedule_appointment'))
         earlier_appointment_patient_s = Appointment.query.filter(Appointment.Patient == form.patient.data).filter(Appointment.Start >= form.start.data).filter(Appointment.Start <= form.end.data).first()
         earlier_appointment_physician_s = Appointment.query.filter(Appointment.Physician == form.physician.data).filter(Appointment.Start >= form.start.data).filter(Appointment.Start <= form.end.data).first()
         earlier_appointment_patient_e = Appointment.query.filter(Appointment.Patient == form.patient.data).filter(Appointment.End >= form.start.data).filter(Appointment.End <= form.end.data).first()
